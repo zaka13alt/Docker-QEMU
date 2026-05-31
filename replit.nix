@@ -1,14 +1,15 @@
 { pkgs }: {
   deps = [
-    pkgs.bashInteractive
+    pkgs.debian-utils
     pkgs.xorg.xorgserver
     pkgs.xorg.xf86videodummy
-    pkgs.xterm
-    pkgs.openbox
+    pkgs.xorg.xinit
+    pkgs.fluxbox
     pkgs.novnc
     pkgs.websockify
-    pkgs.fluxbox
+    pkgs.python3
+    pkgs.bash
     pkgs.shared-mime-info
-    pkgs.gsettings-desktop-schemas
+    pkgs.xterm
   ];
 }
