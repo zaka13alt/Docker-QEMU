@@ -1,8 +1,6 @@
-modules = ["nix"]
+modules = ["nix-2.5"]
+run = "bash main.sh"
 
-[run]
-compile = "chmod +x start.sh"
-command = "./start.sh"
-
-[entrypoint]
-nix = "replit.nix"
+[[ports]]
+localPort = 6080
+externalPort = 443
