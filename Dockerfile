@@ -1,26 +1,26 @@
 FROM debian:bookworm-slim
 
-# Install system dependencies
+ENV DEBIAN_FRONTEND=noninteractive
+ENV DISPLAY=:1
+ENV RESOLUTION=1024x768x24
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     tigervnc-standalone-server \
-    tigervnc-common \
+    tigervnc-tools \
     fluxbox \
     novnc \
     websockify \
-    luakit \
-    procps \
+    firefox-esr \
     ca-certificates \
+    procps \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Configure VNC password
 RUN mkdir -p ~/.vnc && \
     echo "novnc" | vncpasswd -f > ~/.vnc/passwd && \
     chmod 600 ~/.vnc/passwd
 
-# Expose noVNC port
 EXPOSE 8080
 
-# Start VNC server, desktop, and web proxy
-CMD vncserver :1 -geometry 1024x768 -depth 24 -rfbauth ~/.vnc/passwd && \
-    DISPLAY=:1 fluxbox & \
-    websockify --web /usr/share/novnc/ 8080 localhost:5901
+CMD vncserver $DISPLAY -geometry ${RESOLUTION%x*} -depth ${RESOLUTION##*x} -localhost no -rfbauth ~/.vnc/passwd && \
+    /usr/share/novnc/utils/launch.sh --vnc localhost:5901 --listen 8080
