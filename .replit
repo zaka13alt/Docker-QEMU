@@ -1,0 +1,8 @@
+modules = ["nix"]
+
+[run]
+compile = "chmod +x start.sh"
+command = "./start.sh"
+
+[entrypoint]
+nix = "replit.nix"
