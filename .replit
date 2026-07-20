@@ -1,6 +1,0 @@
-modules = ["nix-2.5"]
-run = "bash main.sh"
-
-[[ports]]
-localPort = 6080
-externalPort = 443
