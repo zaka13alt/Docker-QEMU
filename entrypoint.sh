@@ -57,5 +57,5 @@ $QEMU_BIN $DEFAULT_MACHINE \
 # Wait briefly for QEMU to initialize its VNC server socket
 sleep 2
 
-# Start Debian's native noVNC proxy to bridge port 5901 to web browsers on port 8080
-novnc_proxy --vnc localhost:5901 --listen 8080 --web /usr/share/novnc
+# Start noVNC proxy via its native Debian package location
+/usr/share/novnc/utils/novnc_proxy --vnc localhost:5901 --listen 8080 --web /usr/share/novnc
