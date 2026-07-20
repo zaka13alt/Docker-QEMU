@@ -44,7 +44,7 @@ SELECTED_CPU="${CPUTYPE:-$DEFAULT_CPU}"
 echo "Starting $QEMU_BIN..."
 echo "Config: ${CPU} cores ($SELECTED_CPU), ${MEMORY} RAM, ${NET} network..."
 
-# Start QEMU with built-in VNC server listening on port 5901
+# Start QEMU with built-in VNC server listening on port 5901 (display :1)
 $QEMU_BIN $DEFAULT_MACHINE \
     -cpu "$SELECTED_CPU" \
     -m "$MEMORY" \
@@ -54,5 +54,8 @@ $QEMU_BIN $DEFAULT_MACHINE \
     $CDROM_ARG \
     -vnc :1 &
 
-# Start noVNC to bridge the QEMU VNC server to the web browser on port 8080
-/usr/share/novnc/utils/launch.sh --vnc localhost:5901 --listen 8080
+# Wait briefly for QEMU to initialize its VNC server socket
+sleep 2
+
+# Start Debian's native noVNC proxy to bridge port 5901 to web browsers on port 8080
+novnc_proxy --vnc localhost:5901 --listen 8080 --web /usr/share/novnc
